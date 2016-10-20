@@ -5,6 +5,10 @@
 
 @import "{}/node_modules/reactionic/dist/scss/styles/reactionic.scss";
 
+a{
+  text-decoration: none;
+}
+
 .big-text{
   font-size: 1.3em;
 }
@@ -20,6 +24,44 @@ em{
   position: absolute;
   right: 8px;
   top: 8px;
+}
+.anchorDownRight{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}
+.bar-footer.has-tabs{
+  bottom:0;
+}
+.tablenuminput{
+  height: 45px;
+}
+.tablenuminput>input{
+  font-size: 1.5em;
+  width: 100%;
+}
+.darkerText{
+  color: #333;
+}
+.bert-alert {
+  opacity: 0.8;
+}
+.float-right{
+  float: right;
+}
+.item.custom{
+  padding-right: 8px;
+}
+.row.custom{
+  padding: 0;
+}
+.col.custom{
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+.textinputmargin{
+  margin-left: 8px;
 }
 //
 // .bar-dark .button.button-clear {

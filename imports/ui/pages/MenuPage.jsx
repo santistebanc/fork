@@ -1,35 +1,18 @@
 import React from 'react';
-import { IonContent, IonList, IonItem, IonIcon, IonButton } from 'reactionic';
-    import { browserHistory } from 'react-router'
+import { IonContent, IonList, IonItem } from 'reactionic';
+import DishEntry from '../components/DishEntry.jsx';
 
 export default class MenuPage extends React.Component {
-  handleClickItem(e){
-    browserHistory.push('dish/'+2)
-  }
   render() {
     return (
-      <IonContent>
+      <IonContent customClasses={"has-tabs-top"}>
         <IonList>
-          <IonItem divider>Entrada</IonItem>
-          <IonItem thumbnailLeft buttonRight onClick={this.handleClickItem.bind(this)}>
-            <img src="img/prosciutto.jpg" />
-            <h2>Prosciutto</h2>
-            <p className="wrapit">clásicas rebanadas de jamón ibérico</p>
-            <div className="listAbsoluteRight">
-              <h3>$67</h3>
-              <IonButton icon="ion-plus-round" color="balanced" />
-            </div>
-          </IonItem>
-          <IonItem divider>Plato Fuerte</IonItem>
-          <IonItem thumbnailLeft buttonRight>
-            <img src="img/pizza.jpg" />
-            <h2>Pizza Mexicana</h2>
-            <p className="wrapit">peperoni, champiñones, pimiento, cebolla.</p>
-            <div className="listAbsoluteRight">
-              <h3>$112</h3>
-              <IonButton icon="ion-plus-round" color="balanced" />
-            </div>
-        </IonItem>
+          {this.props.dishCategories.map((c,i)=>
+            <div key={i}>
+                <IonItem divider>{c.name}</IonItem>
+                {this.props.dishes.filter(i=>i.categories.indexOf(c._id) !== -1).map((dish,k)=><DishEntry key={k} {...dish} {...this.props}/>)}
+              </div>
+          )}
         </IonList>
       </IonContent>
     );

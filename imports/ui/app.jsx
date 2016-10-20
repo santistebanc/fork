@@ -1,34 +1,41 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import router from './router.jsx';
 import ReactDOM from 'react-dom';
-import { createHistory, useBasename } from 'history';
-
-import MainLayout from './MainLayout.jsx';
-import StartPage from './pages/StartPage.jsx';
-import MenuPage from './pages/MenuPage.jsx';
-import DishDetailsPage from './pages/DishDetailsPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
-
-const requireAuth = (nextState, replace) => {
-  if (!Meteor.loggingIn() && !Meteor.userId()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname },
-    });
-  }
-};
+import { AccountsAnonymous } from 'meteor/brettle:accounts-anonymous';
+import { Tracker } from 'meteor/tracker'
+import { Session } from 'meteor/session'
 
 Meteor.startup(() => {
-  ReactDOM.render(
-    <Router history={browserHistory}>
-      <Route path="/" component={MainLayout}>
-        // <IndexRoute component={StartPage}/>
-        <Route path="inicio" component={StartPage}/>
-        <Route path="menu" component={MenuPage} onEnter={requireAuth}/>
-        <Route path="dish/:id" component={DishDetailsPage}/>
-        <Route path="*" component={NotFoundPage}/>
-      </Route>
-    </Router>,
-    document.getElementById('app'));
+  if(!Meteor.userId()){
+    AccountsAnonymous.login((err)=>{
+    if(err) {
+      console.log(err);
+    }else{
+      console.log('logged in guest ', Meteor.userId());
+    }
+    });
+  }
+  Tracker.autorun(function (c) {
+    let table = Session.get("table");
+    if (!Meteor.userId() || !Session.get("table")) return;
+    c.stop();
+    callRegisterTable(table);
+  });
+  ReactDOM.render(router, document.getElementById('app'));
 });
+
+
+const callRegisterTable = (num)=>{
+  Meteor.call('registerTable', {
+  number: num,
+  userId: Meteor.userId()
+  }, (err, res) => {
+    if (err) {
+      Bert.alert( 'Error al registrar mesa. Intenta registrarla por número.' );
+      console.log(err);
+    } else {
+      console.log('registered successfully table ', num)
+    }
+  });
+}
