@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { DishCategories, Dishes, Tables, ActiveTables, Orders } from '../../../lib/collections.js'
 import MainLayout from '../MainLayout.jsx';
-import { ReactiveVar } from 'meteor/reactive-var'
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session';
 
 export default MainLayoutContainer = createContainer(({ location, params }) => {
 
@@ -11,6 +12,8 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let tablesSub = Meteor.subscribe('tables');
   let dishesSub = Meteor.subscribe('dishes.menu');
   let dishCategoriesSub = Meteor.subscribe('dishCategories');
+  let loggedinUserSub = Meteor.subscribe('loggedinuser');
+
   let activeTable = new ReactiveVar(ActiveTables.findOne({members: {$in: [Meteor.userId()]}}));
   let tableIsRegistered = new ReactiveVar(!!activeTable.get());
   let tableNum = tableIsRegistered.get() && activeTable.get().num;
@@ -18,6 +21,15 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let orders = ordersRaw.get().map(order=>{
     return {order, dish: Dishes.findOne({_id: order.dishId})};
   });
+
+  const handleChangeUserName = (newName)=>{
+    if(Meteor.userId()){
+      Meteor.call('changeUserNick', {
+      userId: Meteor.userId(),
+      newName: newName
+      }, (err, res) => {if (err) console.log(err)});
+    }
+  }
 
 
   const handlePlaceOrder = (dish)=>{
@@ -84,8 +96,20 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     }
   }
 
-  let getTableUserName = (userId)=>tableIsRegistered.get() && `usuario ${activeTable.get().members.indexOf(userId)+1}`;
+  let getTableUserName = (userId=Meteor.userId())=>{
+      let user = Meteor.users.findOne(userId) || {};
+      if(!user.nickName && tableIsRegistered.get()){
+        return `usuario ${activeTable.get().members.indexOf(userId)+1}`;
+      }else{
+        return user.nickName;
+      }
+  }
 
+  let nickName = new ReactiveVar(getTableUserName());
+
+
+  let userIsReady = !!Session.get('userIsReady');
+  let tableIsReady = !!Session.get('tableIsReady');
 
 
   let loading = !dishesSub.ready() || !dishCategoriesSub.ready();
@@ -100,10 +124,14 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     handlePlaceOrder,
     handleCancelOrder,
     handleRegisterTable,
+    handleChangeUserName,
     tableIsRegistered: tableIsRegistered.get(),
     tableNum,
     activeTable: activeTable.get(),
     orders,
-    getTableUserName
+    getTableUserName,
+    userIsReady,
+    tableIsReady,
+    nickName: nickName.get()
   };
 }, MainLayout);

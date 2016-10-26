@@ -23,3 +23,7 @@ Meteor.publish('activeTables', function() {
 Meteor.publish('orders', function() {
     return Orders.find({open:true});
 });
+
+Meteor.publish('loggedinuser', function() {
+    return Meteor.users.find(this.userId, {fields: Meteor.users.visibleToLoggedinUserFields});
+});

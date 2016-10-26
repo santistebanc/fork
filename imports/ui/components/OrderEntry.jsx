@@ -12,7 +12,7 @@ export default class OrderEntry extends React.Component {
   }
   render() {
     const dish = this.props.dish || {};
-    const userName = this.props.getTableUserName(this.props.order.userId)
+    const userName = this.props.getTableUserName(this.props.order.userId);
     return (
           <IonItem thumbnailLeft customClasses={"custom"} onClick={this.handleClickEntry.bind(this)}>
             <img src={`img/${dish.image}`} />

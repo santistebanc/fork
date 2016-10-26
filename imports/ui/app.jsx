@@ -15,7 +15,15 @@ Meteor.startup(() => {
       console.log('logged in guest ', Meteor.userId());
     }
     });
+  }else{
+    console.log('already logged in as ', Meteor.userId());
   }
+  Tracker.autorun(function(c){
+    if(Meteor.user()) {
+      c.stop();
+      Session.set("userIsReady", true );
+    }
+  });
   Tracker.autorun(function (c) {
     let table = Session.get("table");
     if (!Meteor.userId() || !Session.get("table")) return;
@@ -36,6 +44,7 @@ const callRegisterTable = (num)=>{
       console.log(err);
     } else {
       console.log('registered successfully table ', num)
+      Session.set("tableIsReady", true );
     }
   });
 }

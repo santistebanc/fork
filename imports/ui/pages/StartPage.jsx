@@ -1,21 +1,37 @@
 import React from 'react';
-import { IonContent, IonButton, IonList ,IonItem } from 'reactionic';
+import { IonContent, IonButton, IonList ,IonItem, IonSpinner } from 'reactionic';
 
 export default class StartPage extends React.Component {
   constructor(props){
     super(props);
-    this.state = {num: "", name: props.defaultUserName};
+    this.state = {num: "", name: props.nickName, currentName: props.nickName, nameButState: 0};
   }
   handleChangeNum(e){
     this.setState({num: e.target.value});
   }
   handleChangeName(e){
-    this.setState({num: e.target.value});
+    this.setState({name: e.target.value, nameButState: this.state.currentName != e.target.value?1:0});
   }
   handleClickRegister(){
     this.props.handleRegisterTable(this.state.num);
   }
+  handleClickChangeName(){
+    this.setState({nameButState: 2});
+    this.props.handleChangeUserName(this.state.name);
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.nickName){
+      let newname = nextProps.nickName;
+      this.setState({nameButState: 0, currentName: newname, name: newname});
+    }
+  }
   render() {
+    const nameTextBox = <label className="item-input-wrapper tablenuminput textinputmargin">
+          <input type="text" placeholder="Usuario" value={this.state.name} onChange={this.handleChangeName.bind(this)}/>
+      </label>
+
+    const nameButton = <IonButton onClick={this.handleClickChangeName.bind(this)} color="dark">{this.state.nameButState == 2?<IonSpinner icon="dots" customClasses={'inloader spinner-light'}/>:"Listo"}</IonButton>
+
     return (
       <IonContent customClasses={"has-tabs-top"}>
         <IonList>
@@ -32,9 +48,8 @@ export default class StartPage extends React.Component {
             </IonItem>
             <IonItem customClasses={"item-input-inset"}>
               <strong className="title">Nombre: </strong>
-              <label className="item-input-wrapper tablenuminput textinputmargin">
-                <input type="text" placeholder="Usuario" value={this.state.num} onChange={this.handleChangeNum.bind(this)}/>
-              </label>
+              {this.props.userIsReady?nameTextBox:<div className={'textinputmargin'}><IonSpinner icon="dots" /></div>}
+              {this.state.nameButState == 0?'':nameButton}
             </IonItem>
             <IonItem wrap>
                 <strong className="title">Tu mesa es: </strong>
