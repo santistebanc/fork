@@ -32,6 +32,18 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     }
   }
 
+  const handleConfirmOrders = (orderIds)=>{
+      Meteor.call('confirmOrders', {
+      orderIds: orderIds,
+      }, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          //success!
+        }
+      });
+    }
+
 
   const handlePlaceOrder = (dish)=>{
     if(Meteor.userId() && tableIsRegistered.get()){
@@ -113,12 +125,14 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let tableIsReady = !!Session.get('tableIsReady');
 
 
-  let loading = !dishesSub.ready() || !dishCategoriesSub.ready();
+  let loadingDishes = new ReactiveVar(!dishesSub.ready() || !dishCategoriesSub.ready());
+  let loadingOrders = new ReactiveVar(!ordersSub.ready());
   let dishes = Dishes.find().fetch();
   let dishCategories = DishCategories.find().fetch();
 
   return {
-    loading,
+    loadingDishes: loadingDishes.get(),
+    loadingOrders: loadingOrders.get(),
     dishes,
     dishCategories,
     location,
@@ -126,6 +140,7 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     handleCancelOrder,
     handleRegisterTable,
     handleChangeUserName,
+    handleConfirmOrders,
     tableIsRegistered: tableIsRegistered.get(),
     tableNum,
     activeTable: activeTable.get(),

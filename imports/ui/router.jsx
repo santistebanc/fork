@@ -75,7 +75,7 @@ const registerTable = function(nextState, replace){
 export default (
     <Router history={browserHistory}>
       <Route path="/" component={WithBody(MainLayoutContainer)}>
-        // <IndexRoute component={StartPage}/>
+        <IndexRoute component={StartPage}/>
         <Route path="/inicio" component={StartPage} {...enterleave}/>
         <Route path="/menu" component={MenuPage} {...enterleave}/>
         <Route path="/ordenes" component={OrdersPage} {...enterleave}/>

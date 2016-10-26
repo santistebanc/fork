@@ -13,7 +13,7 @@ export default class MainLayout extends React.Component {
     return (
     <div>
       <IonHeaderBar customClasses="bar-positive" title="Restaurant" />
-      <IonFooterBar>{footertitle}</IonFooterBar>
+      <IonFooterBar customClasses="bar-dark">{footertitle}</IonFooterBar>
       <Navigation/>
       <IonNavView>
         <IonView>

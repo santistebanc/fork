@@ -5,8 +5,14 @@
 
 @import "{}/node_modules/reactionic/dist/scss/styles/reactionic.scss";
 
+$content-background: lighten($positive, 20%);
+
 a{
   text-decoration: none;
+}
+
+.content{
+  background-color: $content-background;
 }
 
 .big-text{
@@ -62,6 +68,14 @@ em{
 }
 .textinputmargin{
   margin-left: 8px;
+}
+.paddingRight{
+  padding-right: 8px;
+}
+.with-padding{
+  padding: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
 }
 //
 // .bar-dark .button.button-clear {
