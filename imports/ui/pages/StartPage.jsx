@@ -30,7 +30,7 @@ export default class StartPage extends React.Component {
           <input type="text" placeholder="Usuario" value={this.state.name} onChange={this.handleChangeName.bind(this)}/>
       </label>
 
-    const nameButton = <IonButton onClick={this.handleClickChangeName.bind(this)} color="dark">{this.state.nameButState == 2?<IonSpinner icon="dots" customClasses={'inloader spinner-light'}/>:"Listo"}</IonButton>
+    const nameButton = <IonButton onClick={this.handleClickChangeName.bind(this)} color="dark">{this.state.nameButState == 2?<IonSpinner icon="dots" customClasses={'inloader spinner-light'}/>:"Cambiar"}</IonButton>
 
     return (
       <IonContent customClasses={"has-tabs-top"}>

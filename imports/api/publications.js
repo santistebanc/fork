@@ -27,3 +27,7 @@ Meteor.publish('orders', function() {
 Meteor.publish('loggedinuser', function() {
     return Meteor.users.find(this.userId, {fields: Meteor.users.visibleToLoggedinUserFields});
 });
+
+Meteor.publish('users.basicinfo', function() {
+    return Meteor.users.find({}, {fields: Meteor.users.publicFields});
+});

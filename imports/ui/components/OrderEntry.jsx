@@ -19,15 +19,12 @@ export default class OrderEntry extends React.Component {
             <div className="row custom">
               <div className="col col-60 custom">
                   <h2>{dish.title}</h2>
-                  <p className="wrapit">{dish.brief}</p>
-                </div>
-                <div className="col col-35 custom">
                   <h3><strong className={'positive'}>{userName}</strong></h3>
                 </div>
                 <div className="col custom">
                   <div className={"float-right"}>
-                  {this.props.tableIsRegistered && <IonButton onClick={this.handleClickCancel.bind(this)} icon="ion-close" color="assertive" size="small" />}
-                  <br/><br/>
+                  {this.props.tableIsRegistered && <IonButton customClasses={"float-right"} onClick={this.handleClickCancel.bind(this)} icon="ion-close" color="assertive" size="small" />}
+                  <br/><br/><br/>
                   <h3>{"$"}{dish.price}</h3>
                   </div>
                 </div>

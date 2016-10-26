@@ -13,6 +13,7 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let dishesSub = Meteor.subscribe('dishes.menu');
   let dishCategoriesSub = Meteor.subscribe('dishCategories');
   let loggedinUserSub = Meteor.subscribe('loggedinuser');
+  let usersSub = Meteor.subscribe('users.basicinfo');
 
   let activeTable = new ReactiveVar(ActiveTables.findOne({members: {$in: [Meteor.userId()]}}));
   let tableIsRegistered = new ReactiveVar(!!activeTable.get());
