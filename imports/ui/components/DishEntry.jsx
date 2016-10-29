@@ -19,7 +19,7 @@ export default class DishEntry extends React.Component {
                   <h2 clasName={'text-wrap'}>{this.props.title}</h2>
                   <p className="wrapit">{this.props.brief}</p>
                 </div>
-                <div className="col col-20 custom">
+                <div className="col col-25 custom">
                   <div className={"float-right"}>
                   <h3>{"$"}{this.props.price}</h3>
                   {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} className={"float-right"} icon="ion-plus-round" color="balanced" />}

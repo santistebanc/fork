@@ -40,7 +40,7 @@ export default class StartPage extends React.Component {
         <IonCard><IonList>
           <IonItem wrap>
             <p>
-              <span className="darkerText big-text">Ordenar tus
+              <span className="darkerText big-text">Ordena tus
               platillos favoritos directamente desde tu celular. </span>
             <br/>
             <small>NOTA: Actualmente la App se encuentra en periodo de prueba.</small>

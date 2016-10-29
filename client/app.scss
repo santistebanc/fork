@@ -6,7 +6,7 @@ $balanced:  #40bf71;
 // $energized: #ffc900;
 $assertive: #d6a35c;
 $royal:     #4d88b3;
-// $dark:      #444;
+$dark:      #555;
 
 $footer-height: 60px;
 $sub-footer-height: 44px;
@@ -125,6 +125,9 @@ em{
 }
 .paddingRight{
   padding-right: 8px;
+}
+.margin-right{
+  margin-right: 8px;
 }
 .with-padding{
   padding: 4px;

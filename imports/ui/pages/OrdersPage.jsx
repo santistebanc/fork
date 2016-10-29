@@ -10,7 +10,7 @@ export default class OrdersPage extends React.Component {
   render() {
     let totalAmount = this.props.orders.reduce((sum, o)=>sum+o.dish.price,0);
     let open = this.props.orders.filter(o=>o.order.status == "open");
-    let received = this.props.orders.filter(o=>o.order.status == "received");
+    let received = this.props.orders.filter(o=>o.order.sent);
     let confirmedOrders = ()=>{
       if(received.length>0){
         return received.map((order,k)=>
@@ -31,7 +31,7 @@ export default class OrdersPage extends React.Component {
             <OrderEntry key={k} {...this.props} {...order} />
           )}</IonList></IonCard>}
           {received.length>0 && <IonCard><IonList>
-              <IonItem divider>Ordenes Recibidas</IonItem>
+              <IonItem divider>Ordenes Enviadas</IonItem>
               {received.map((order,k)=>
                 <OrderEntry key={k} {...this.props} {...order} />
               )}

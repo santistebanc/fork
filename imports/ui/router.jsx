@@ -7,7 +7,9 @@ import getPlatform from '../utils/getPlatform.js'
 
 
 import MainLayoutContainer from './containers/MainLayoutContainer.jsx';
+import KitchenLayoutContainer from './containers/KitchenLayoutContainer.jsx';
 import StartPage from './pages/StartPage.jsx';
+import KitchenPage from './pages/KitchenPage.jsx';
 import MenuPage from './pages/MenuPage.jsx';
 import OrdersPage from './pages/OrdersPage.jsx';
 import DishDetailsPage from './pages/DishDetailsPage.jsx';
@@ -46,6 +48,12 @@ const leaving = function(pState) {
   prevState = pState;
 };
 
+const redirectHome = function(nextState, replace) {
+  replace({
+    pathname: '/inicio'
+  });
+};
+
 const IonBodyModified = class extends IonBody{
   getChildContext(){
     let obj = super.getChildContext();
@@ -75,13 +83,16 @@ const registerTable = function(nextState, replace){
 export default (
     <Router history={browserHistory}>
       <Route path="/" component={WithBody(MainLayoutContainer)}>
-        <IndexRoute component={StartPage}/>
+        <IndexRoute onEnter={redirectHome}/>
         <Route path="/inicio" component={StartPage} {...enterleave}/>
         <Route path="/menu" component={MenuPage} {...enterleave}/>
         <Route path="/ordenes" component={OrdersPage} {...enterleave}/>
         <Route path="/dish/:id" component={DishDetailsPage} {...enterleave}/>
         <Route path="/registrar/:num" component={OrdersPage} onEnter={registerTable}/>
-        <Route path="*" component={NotFoundPage} {...enterleave}/>
       </Route>
+      <Route path="/cocina" component={WithBody(KitchenLayoutContainer)}>
+        <IndexRoute component={KitchenPage}/>
+      </Route>
+      <Route path="*" component={NotFoundPage} {...enterleave}/>
     </Router>
 )

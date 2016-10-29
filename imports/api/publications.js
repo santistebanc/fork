@@ -29,5 +29,9 @@ Meteor.publish('loggedinuser', function() {
 });
 
 Meteor.publish('users.basicinfo', function() {
-    return Meteor.users.find({}, {fields: Meteor.users.publicFields});
+    return Meteor.users.find({ "status.online": true }, {fields: Meteor.users.publicFields});
+});
+
+Meteor.publish("users.restaurant", function() {
+  return Meteor.users.find({}, {fields: Meteor.users.restaurantFields});
 });

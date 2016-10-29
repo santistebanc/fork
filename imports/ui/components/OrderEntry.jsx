@@ -13,6 +13,15 @@ export default class OrderEntry extends React.Component {
   render() {
     const dish = this.props.dish || {};
     const userName = this.props.getTableUserName(this.props.order.userId);
+    const status = ()=>{
+      if(this.props.order.status == 'received'){
+        return <strong className={'dark'}>orden en espera</strong>
+      }else if(this.props.order.status == 'accepted'){
+        return <strong className={'royal'}>orden en preparación</strong>
+      }else if(this.props.order.status == 'ready'){
+        return <strong className={'balanced'}>orden lista!</strong>
+      }
+    }
     return (
           <IonItem thumbnailLeft customClasses={"custom"} onClick={this.handleClickEntry.bind(this)}>
             <img src={`img/${dish.image}`} />
@@ -20,6 +29,7 @@ export default class OrderEntry extends React.Component {
               <div className="col col-60 custom">
                   <h2>{dish.title}</h2>
                   <h3><strong className={'positive'}>{userName}</strong></h3>
+                  <h4>{status()}</h4>
                 </div>
                 <div className="col custom">
                   <div className={"float-right"}>

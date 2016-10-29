@@ -5,8 +5,10 @@ import ReactDOM from 'react-dom';
 import { AccountsAnonymous } from 'meteor/brettle:accounts-anonymous';
 import { Tracker } from 'meteor/tracker'
 import { Session } from 'meteor/session'
+import { moment } from 'meteor/momentjs:moment'
 
 Meteor.startup(() => {
+  console.log(moment.locale("es"));
   if(!Meteor.userId()){
     AccountsAnonymous.login((err)=>{
     if(err) {
