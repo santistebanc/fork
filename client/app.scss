@@ -1,22 +1,76 @@
-// $react-blue: #00d8ff;
-// $bar-dark-text: $react-blue;
-// $dark: #000000;
-// $positive: $react-blue;
+$light:     #fff;
+// $stable:    #f8f8f8;
+$positive: #ac4339;
+$calm:      #d3776f;
+$balanced:  #40bf71;
+// $energized: #ffc900;
+$assertive: #d6a35c;
+$royal:     #4d88b3;
+// $dark:      #444;
+
+$footer-height: 60px;
+$sub-footer-height: 44px;
+
+$item-thumbnail-width:            80px;
+$item-thumbnail-height:           80px;
+$item-thumbnail-margin:           2px;
+
+$item-padding:                    8px;
+
+$bar-footer-height:               60px;
 
 @import "{}/node_modules/reactionic/dist/scss/styles/reactionic.scss";
-
-$content-background: lighten($positive, 20%);
 
 a{
   text-decoration: none;
 }
 
+@font-face {
+    font-family: 'italian'; /*a name to be used later*/
+    src: url('/fonts/Italiana-Regular.ttf'); /*URL to font*/
+}
+
+.italian-font>h1{
+  font-family: "italian" !important;
+  font-size: 2em !important;
+  font-weight: bolder !important;
+}
+
+.logo-space{
+  background: rgba(255, 255, 255, .3);
+}
+
+.logo-space>img{
+  display: block;
+    margin: auto;
+    width: 80%;
+}
+
+.has-footer {
+  bottom: $footer-height !important;
+}
+.has-sub-footer  {
+  bottom: ($footer-height + $sub-footer-height) !important;
+}
+
 .content{
-  background-color: $content-background;
+  background-color: hsl(34, 53%, 82%);
+  background-image: repeating-linear-gradient(45deg, transparent 5px,
+    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
+    ),
+  repeating-linear-gradient(135deg, transparent 5px,
+    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
+  );
+}
+
+.card, .list-inset {
+    margin: 10px 5px;
 }
 
 .big-text{
-  font-size: 1.3em;
+  font-size: 1.3em !important;
 }
 .wrapit{
   overflow: initial !important;

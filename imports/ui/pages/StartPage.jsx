@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonButton, IonList ,IonItem, IonSpinner } from 'reactionic';
+import { IonContent, IonButton, IonCard, IonList ,IonItem, IonSpinner } from 'reactionic';
 
 export default class StartPage extends React.Component {
   constructor(props){
@@ -34,10 +34,10 @@ export default class StartPage extends React.Component {
 
     return (
       <IonContent customClasses={"has-tabs-top"}>
-        <IonList>
-          <IonItem divider>
-            <h1 className="title">ForkApp</h1>
-          </IonItem>
+        <IonCard customClasses={"logo-space"}>
+          <img src={'img/italian-logo.png'}/>
+        </IonCard>
+        <IonCard><IonList>
           <IonItem wrap>
             <p>
               <span className="darkerText big-text">Ordenar tus
@@ -74,7 +74,7 @@ export default class StartPage extends React.Component {
             </label>
             <IonButton onClick={this.handleClickRegister.bind(this)} color="dark">{this.props.tableIsRegistered?"Cambiar Mesa":"Registrar Mesa"}</IonButton>
         </IonItem>
-        </IonList>
+        </IonList></IonCard>
       </IonContent>
     );
   }

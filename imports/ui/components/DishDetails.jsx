@@ -1,21 +1,21 @@
 import React from 'react';
-import { IonContent,IonButton } from 'reactionic';
+import { IonContent,IonButton, IonCard, IonList, IonItem } from 'reactionic';
 
 export default class DishDetails extends React.Component {
   render() {
     return (
-        <div className="list card">
+        <IonCard><IonList>
 
-          <div className="item item-divider">
+          <IonItem divider>
             <h1>{this.props.title}</h1>
-          </div>
+          </IonItem>
 
-          <div className="item item-body">
+          <IonItem>
             <img className="full-image" src={`../img/${this.props.image}`} />
             {this.props.description}
-          </div>
+          </IonItem>
 
-        </div>
+        </IonList></IonCard>
     );
   }
 }

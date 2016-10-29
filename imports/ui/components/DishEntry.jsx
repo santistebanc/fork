@@ -12,14 +12,20 @@ export default class DishEntry extends React.Component {
   }
   render() {
     return (
-          <IonItem thumbnailLeft buttonRight onClick={this.handleClickEntry.bind(this)}>
+          <IonItem thumbnailLeft onClick={this.handleClickEntry.bind(this)}>
             <img src={`img/${this.props.image}`} />
-            <h2>{this.props.title}</h2>
-            <p className="wrapit">{this.props.brief}</p>
-            <div className="listAbsoluteRight">
-              <h3>{"$"}{this.props.price}</h3>
-              {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} icon="ion-plus-round" color="balanced" />}
-            </div>
+              <div className="row custom">
+                <div className="col custom">
+                  <h2 clasName={'text-wrap'}>{this.props.title}</h2>
+                  <p className="wrapit">{this.props.brief}</p>
+                </div>
+                <div className="col col-20 custom">
+                  <div className={"float-right"}>
+                  <h3>{"$"}{this.props.price}</h3>
+                  {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} className={"float-right"} icon="ion-plus-round" color="balanced" />}
+                  </div>
+                </div>
+              </div>
           </IonItem>
     );
   }
