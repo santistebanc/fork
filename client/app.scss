@@ -2,7 +2,7 @@ $light:     #fff;
 // $stable:    #f8f8f8;
 $positive: #ac4339;
 $calm:      #d3776f;
-$balanced:  #40bf71;
+$balanced:  #659f60;
 // $energized: #ffc900;
 $assertive: #d6a35c;
 $royal:     #4d88b3;
@@ -133,6 +133,22 @@ em{
   padding: 4px;
   padding-right: 8px;
   padding-left: 8px;
+}
+.center{
+  margin: 0 auto;
+  text-align: center;
+}
+
+// .image-container {
+//     width: 40%;
+//     height: 40%;
+//     background: #444;
+//     margin: 0 auto;
+// }
+img.thum{
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
 }
 //
 // .bar-dark .button.button-clear {

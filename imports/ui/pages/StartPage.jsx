@@ -38,14 +38,6 @@ export default class StartPage extends React.Component {
           <img src={'img/italian-logo.png'}/>
         </IonCard>
         <IonCard><IonList>
-          <IonItem wrap>
-            <p>
-              <span className="darkerText big-text">Ordena tus
-              platillos favoritos directamente desde tu celular. </span>
-            <br/>
-            <small>NOTA: Actualmente la App se encuentra en periodo de prueba.</small>
-            </p>
-            </IonItem>
             <IonItem customClasses={"item-input-inset"}>
               <strong className="title">Nombre: </strong>
               {this.props.userIsReady?nameTextBox:<div className={'textinputmargin'}><IonSpinner icon="dots" /></div>}

@@ -24,14 +24,14 @@ export default class OrderEntry extends React.Component {
     }
     return (
           <IonItem thumbnailLeft customClasses={"custom"} onClick={this.handleClickEntry.bind(this)}>
-            <img src={`img/${dish.image}`} />
+            <img src={`img/${dish.thumbnail}`} />
             <div className="row custom">
-              <div className="col col-60 custom">
+              <div className="col custom">
                   <h2>{dish.title}</h2>
                   <h3><strong className={'positive'}>{userName}</strong></h3>
                   <h4>{status()}</h4>
                 </div>
-                <div className="col custom">
+                <div className="col col-25 custom">
                   <div className={"float-right"}>
                   <h3>{"$"}{dish.price}</h3>
                   <br/>

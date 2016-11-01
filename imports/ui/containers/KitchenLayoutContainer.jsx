@@ -18,8 +18,8 @@ export default KitchenLayoutContainer = createContainer(({ location, params }) =
   let tables = Tables.find().fetch();
   let users = Meteor.users.find().fetch();
   let activeTables = ActiveTables.find().fetch();
-  let ordersRaw = Orders.find({open: true});
-  let orders = ordersRaw.fetch().map(order=>{
+  let ordersRaw = new ReactiveVar(Orders.find({open: true}).fetch());
+  let orders = ordersRaw.get().map(order=>{
     return {order, dish: Dishes.findOne({_id: order.dishId})};
   });
 

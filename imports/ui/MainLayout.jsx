@@ -17,10 +17,7 @@ export default class MainLayout extends React.Component {
     <div>
       <IonHeaderBar customClasses="bar-calm italian-font" title="Forchetta" />
       <IonFooterBar customClasses="bar-dark">
-        <IonButton onClick={this.handleClickPayBill.bind(this)} icon={'ion-cash'} customClasses={'big-text'} color="calm" size={"large"}>
-          Pagar Cuenta
-        </IonButton>
-        <IonButton onClick={this.handleClickCallWaiter.bind(this)} icon={'ion-chatbox-working'} customClasses={'float-right big-text'} color="royal" size={"large"}>
+      <IonButton onClick={this.handleClickCallWaiter.bind(this)} icon={'ion-chatbox-working'} iconPosition="left" customClasses={'text-center big-text center'} color="royal" size={"large"}>
           Llamar a Mesero
         </IonButton>
       </IonFooterBar>

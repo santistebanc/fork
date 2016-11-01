@@ -12,7 +12,7 @@ export default class DishDetails extends React.Component {
 
           <IonItem>
             <img className="full-image" src={`../img/${this.props.image}`} />
-            {this.props.description}
+            <p className={"wrapit"}>{this.props.description}</p>
           </IonItem>
 
         </IonList></IonCard>

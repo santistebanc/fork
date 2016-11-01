@@ -24,7 +24,7 @@ export default class KitchenOrderEntry extends React.Component {
     const userName = this.props.users && this.props.order?this.props.users.find(u=>u._id == this.props.order.userId).nickName:'';
     return (
           <IonItem thumbnailLeft customClasses={"custom"}>
-            <img src={`img/${dish.image}`} />
+            <img src={`img/${dish.thumbnail}`} />
             <div className="row custom responsive-sm">
               <div className="col col-50 custom">
                   <h2>{dish.title}</h2>
