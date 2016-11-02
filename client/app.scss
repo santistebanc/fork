@@ -30,6 +30,28 @@ a{
     src: url('/fonts/Italiana-Regular.ttf'); /*URL to font*/
 }
 
+.no-margin{
+  margin: 0 !important;
+}
+
+.not-assigned{
+  display:none;
+}
+
+.table-select{
+  @extend .big-text;
+  font-weight: bold;
+  color: $positive !important;
+}
+
+.item-input-inset>strong{
+  padding-left: 3px;
+}
+
+.middle-align{
+  vertical-align: middle;
+}
+
 .italian-font>h1{
   font-family: "italian" !important;
   font-size: 2em !important;

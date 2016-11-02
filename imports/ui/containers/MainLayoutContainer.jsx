@@ -15,9 +15,9 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let loggedinUserSub = Meteor.subscribe('loggedinuser');
   let usersSub = Meteor.subscribe('users.basicinfo');
 
+  let tables = Tables.find().fetch();
   let activeTable = new ReactiveVar(ActiveTables.findOne({members: {$in: [Meteor.userId()]}}));
   let tableIsRegistered = new ReactiveVar(!!activeTable.get());
-  let tableNum = tableIsRegistered.get() && activeTable.get().num;
   let ordersRaw = new ReactiveVar(tableIsRegistered.get()?Orders.find({open: true, activeTableId: activeTable.get()._id}).fetch():[]);
   let orders = ordersRaw.get().map(order=>{
     return {order, dish: Dishes.findOne({_id: order.dishId})};
@@ -80,10 +80,10 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
       });
     }
 
-    const handleRegisterTable = (num)=>{
+    const handleRegisterTable = (id)=>{
       if(Meteor.userId()){
       Meteor.call('registerTable', {
-      number: num,
+      tableId: id,
       userId: Meteor.userId()
       }, (err, res) => {
         if (err) {
@@ -103,7 +103,7 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
             style: 'growl-bottom-right',
             icon: 'fa-check'
           });
-          console.log('registered successfully table ', num)
+          console.log('registered successfully table ', id)
         }
       });
     }
@@ -130,9 +130,24 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
   let dishes = Dishes.find().fetch();
   let dishCategories = DishCategories.find().fetch();
 
+  let userStatusDetails = (()=>{
+    if(Meteor.userId() && Session.get('userIsReady')){
+      return "inicio de sesión exitosa";
+    }else if(Meteor.loggingIn() && Session.get('isGuest')){
+      return "iniciando sesión de invitado";
+    }else if(Meteor.loggingIn() && !Session.get('isGuest')){
+      return "iniciando sesión de usuario";
+    }else if(Session.get('userIsReady')){
+      return "inicio de sesión exitosa";
+    }else{
+      return "error al iniciar sesión";
+    }
+  })()
+
   return {
     loadingDishes: loadingDishes.get(),
     loadingOrders: loadingOrders.get(),
+    tables,
     dishes,
     dishCategories,
     location,
@@ -142,12 +157,12 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     handleChangeUserName,
     handleConfirmOrders,
     tableIsRegistered: tableIsRegistered.get(),
-    tableNum,
     activeTable: activeTable.get(),
     orders,
     getTableUserName,
     userIsReady,
     tableIsReady,
-    nickName: nickName.get()
+    nickName: nickName.get(),
+    userStatusDetails
   };
 }, MainLayout);

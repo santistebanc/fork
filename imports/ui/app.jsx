@@ -10,6 +10,7 @@ import { moment } from 'meteor/momentjs:moment'
 Meteor.startup(() => {
   if(!Meteor.userId()){
     AccountsAnonymous.login((err)=>{
+    Session.set("isGuest", true );
     if(err) {
       console.log(err);
     }else{

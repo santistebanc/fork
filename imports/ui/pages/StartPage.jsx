@@ -1,28 +1,45 @@
 import React from 'react';
-import { IonContent, IonButton, IonCard, IonList ,IonItem, IonSpinner } from 'reactionic';
+import ReactDOM from 'react-dom';
+import { IonContent, IonButton, IonCard, IonList ,IonItem, IonSpinner, IonPopoverButton, IonIcon } from 'reactionic';
 
 export default class StartPage extends React.Component {
   constructor(props){
     super(props);
-    this.state = {num: "", name: props.nickName, currentName: props.nickName, nameButState: 0};
+    let table = this.props.tables.find(t=>t._id == this.props.activeTable.tableId) || {};
+    this.state = {selectedTable: false, table: table, name: props.nickName};
   }
-  handleChangeNum(e){
-    this.setState({num: e.target.value});
+  handleChangeTable(newtable){
+    this.props.handleRegisterTable(newtable._id);
+    this.setState({table: newtable, selectedTable: true});
   }
   handleChangeName(e){
-    this.setState({name: e.target.value, nameButState: this.state.currentName != e.target.value?1:0});
+    this.setState({name: e.target.value});
+    this.props.handleChangeUserName(e.target.value);
   }
-  handleClickRegister(){
-    this.props.handleRegisterTable(this.state.num);
+  renderPopover(){
+    let popover = <TablePopover handleChangeTable={this.handleChangeTable.bind(this)} tables={this.props.tables} table={this.state.table}/>
+    this.context.ionShowPopover(popover);
   }
-  handleClickChangeName(){
-    this.setState({nameButState: 2});
-    this.props.handleChangeUserName(this.state.name);
-  }
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps, nextContext){
+    let table = nextProps.tables.find(t=>t._id == nextProps.activeTable.tableId) || {};
     if(nextProps.nickName){
       let newname = nextProps.nickName;
-      this.setState({nameButState: 0, currentName: newname, name: newname});
+      this.setState({name: newname});
+    }
+    if(table._id == this.state.table._id && this.state.selectedTable){
+      nextContext.ionPopover = false;
+      this.setState({selectedTable: false});
+    }
+    if(JSON.stringify(table) != JSON.stringify(this.state.table)){
+      this.setState({table: table});
+    }
+
+  }
+  componentDidUpdate(prevProps, prevState, prevContext){
+    if(this.context.ionPopover != false){
+      this.renderPopover();
+    }else{
+      this.context.ionShowPopover(false);
     }
   }
   render() {
@@ -30,44 +47,54 @@ export default class StartPage extends React.Component {
           <input type="text" placeholder="Usuario" value={this.state.name} onChange={this.handleChangeName.bind(this)}/>
       </label>
 
-    const nameButton = <IonButton onClick={this.handleClickChangeName.bind(this)} color="dark">{this.state.nameButState == 2?<IonSpinner icon="dots" customClasses={'inloader spinner-light'}/>:"Cambiar"}</IonButton>
-
-    return (
+return (
       <IonContent customClasses={"has-tabs-top"}>
         <IonCard customClasses={"logo-space"}>
           <img src={'img/italian-logo.png'}/>
         </IonCard>
         <IonCard><IonList>
+            {!this.props.userIsReady?
+              <IonItem customClasses={"item-input-wrap"}>
+                <IonSpinner icon="lines" />
+                <i>{this.props.userStatusDetails}</i>
+              </IonItem>:
             <IonItem customClasses={"item-input-inset"}>
               <strong className="title">Nombre: </strong>
-              {this.props.userIsReady?nameTextBox:<div className={'textinputmargin'}><IonSpinner icon="dots" /></div>}
-              {this.state.nameButState == 0?'':nameButton}
+              {nameTextBox}
+            </IonItem>}
+            <IonItem buttonRight>
+            <strong className="input-label title">Tu mesa es: </strong>
+            <IonPopoverButton type="clear" onClick={this.renderPopover.bind(this)} >
+              {`Mesa ${this.state.table.num}`}<IonIcon icon={"ion-arrow-down-b"}/>
+            </IonPopoverButton>
+          </IonItem>
+            <IonItem>
+              <IonButton icon={'ion-qr-scanner'} customClasses={'float-right'} iconPosition="left" color="dark">
+                  Escanear
+                </IonButton>
+                <IonButton icon={'ion-log-in'} iconPosition="left" color="calm">
+                    Iniciar Sesión
+                  </IonButton>
             </IonItem>
-            <IonItem wrap>
-                <strong className="title">Tu mesa es: </strong>
-                <strong className="item-note big-text positive">{this.props.tableIsRegistered?`Mesa ${this.props.tableNum}`:"sin registrar"}</strong>
-              </IonItem>
-              {!this.props.tableIsRegistered && <IonItem wrap>
-                  <h2 className="title">Registro</h2>
-                  <p className="darkerText">
-                    Para poder tomar tu orden se necesita <strong>registrar
-                    la mesa</strong> en la que te encuentras.
-                  </p>
-                  <br/>
-                  <p className="darkerText">
-                    Para registrar tu mesa ingresa el <i>número de
-                  identificación</i> de la mesa. También puedes
-                  registrar la mesa escaneando el código QR.
-                </p>
-              </IonItem>}
-          <IonItem customClasses={"item-input-inset"}>
-            <label className="item-input-wrapper tablenuminput">
-              <input type="text" placeholder="Número" value={this.state.num} onChange={this.handleChangeNum.bind(this)}/>
-            </label>
-            <IonButton onClick={this.handleClickRegister.bind(this)} color="dark">{this.props.tableIsRegistered?"Cambiar Mesa":"Registrar Mesa"}</IonButton>
-        </IonItem>
         </IonList></IonCard>
       </IonContent>
     );
   }
+}
+
+StartPage.contextTypes = {
+    ionShowPopover: React.PropTypes.func,
+    ionPopover: React.PropTypes.oneOfType([React.PropTypes.object,React.PropTypes.bool])
+  };
+
+class TablePopover extends React.Component {
+    render(){
+    return  <IonCard customClasses={"no-margin"}><IonList>
+        {this.props.tables.map((t,i)=>
+          <IonItem key={i} customClasses={"custom item-icon-right"} onClick={this.props.handleChangeTable.bind(null, t)}>
+            {this.props.table._id == t._id?<strong className={"positive"}>{`Mesa ${t.num}`}</strong>:<span>{`Mesa ${t.num}`}</span>}
+            <IonIcon icon="ios-arrow-right" />
+          </IonItem>)}
+      </IonList></IonCard>
+      }
 }
