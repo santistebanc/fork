@@ -8,6 +8,8 @@ $assertive: #d6a35c;
 $royal:     #4d88b3;
 $dark:      #555;
 
+$soft:  lavender;
+
 $footer-height: 60px;
 $sub-footer-height: 44px;
 
@@ -26,8 +28,21 @@ a{
 }
 
 @font-face {
-    font-family: 'italian'; /*a name to be used later*/
-    src: url('/fonts/Italiana-Regular.ttf'); /*URL to font*/
+    font-family: 'rubik'; /*a name to be used later*/
+    src: url('/fonts/Rubik-Bold.ttf'); /*URL to font*/
+}
+
+.kitchen-option{
+  margin: 3px;
+  width: 70px;
+}
+
+.soft{
+  color: $soft;
+}
+
+.item.soft{
+  background-color: $soft;
 }
 
 .no-margin{
@@ -38,7 +53,7 @@ a{
   display:none;
 }
 
-.table-select{
+.table-select>button{
   @extend .big-text;
   font-weight: bold;
   color: $positive !important;
@@ -52,9 +67,9 @@ a{
   vertical-align: middle;
 }
 
-.italian-font>h1{
-  font-family: "italian" !important;
-  font-size: 2em !important;
+.rubik-font>h1{
+  font-family: "rubik" !important;
+  font-size: 2.5em !important;
   font-weight: bolder !important;
 }
 

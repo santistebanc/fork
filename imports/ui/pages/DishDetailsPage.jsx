@@ -12,7 +12,9 @@ export default class DishDetailsPage extends React.Component {
     return (
       <IonContent customClasses={"has-tabs-top"}>
         <IonButton onClick={browserHistory.goBack} icon="ion-chevron-left" iconPosition="left" >Atras</IonButton>
-        {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} icon="ion-plus-round" iconPosition="right" color="balanced" >Ordenar</IonButton>}
+        {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} color="balanced" >
+        Ordenar {this.props.orders.reduce((c,o)=>o.dish._id == this.props.params.id?c+1:c,0)}
+      </IonButton>}
         <DishDetails {...dish}/>
       </IonContent>
     );

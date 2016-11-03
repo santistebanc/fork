@@ -54,13 +54,6 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
       }, (err, res) => {
         if (err) {
           console.log(err);
-        } else {
-          Bert.alert({
-            title: 'Orden agregada',
-            type: 'success',
-            style: 'growl-bottom-right',
-            icon: 'fa-check'
-          });
         }
       });
     }else{
@@ -87,22 +80,8 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
       userId: Meteor.userId()
       }, (err, res) => {
         if (err) {
-          if(err.error == 'tableInexistent'){
-            Bert.alert({
-              title: 'El número de mesa ingresado no existe',
-              type: 'danger',
-              style: 'growl-bottom-right',
-              icon: 'fa-remove'
-            });
-          }
           console.log(err);
         } else {
-          Bert.alert({
-            title: 'Mesa registrada exitosamente.',
-            type: 'success',
-            style: 'growl-bottom-right',
-            icon: 'fa-check'
-          });
           console.log('registered successfully table ', id)
         }
       });
@@ -144,6 +123,18 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     }
   })()
 
+  let tableDetails = (()=>{
+    if(Session.get("tableIsReady") && !Session.get("table") == undefined){
+      return `mesa ${Session.get("table")} registrada exitosamente`;
+    }else if(Session.get("tableIsReady")){
+      return `no se ha registrado mesa`;
+    }else if(Session.get("table")){
+      return `registrando mesa ${Session.get("table")}`;
+    }else{
+      return "error al registrar mesa";
+    }
+  })()
+
   return {
     loadingDishes: loadingDishes.get(),
     loadingOrders: loadingOrders.get(),
@@ -163,6 +154,7 @@ export default MainLayoutContainer = createContainer(({ location, params }) => {
     userIsReady,
     tableIsReady,
     nickName: nickName.get(),
-    userStatusDetails
+    userStatusDetails,
+    tableDetails
   };
 }, MainLayout);

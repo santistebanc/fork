@@ -11,6 +11,7 @@ export default class DishEntry extends React.Component {
     this.props.handlePlaceOrder(this.props._id);
   }
   render() {
+    let ordersnum = this.props.orders.reduce((c,o)=>o.dish._id == this.props._id?c+1:c,0)
     return (
           <IonItem thumbnailLeft onClick={this.handleClickEntry.bind(this)}>
             <img className={'thum'} src={`img/${this.props.thumbnail}`} />
@@ -24,7 +25,7 @@ export default class DishEntry extends React.Component {
                   <h3>{"$"}{this.props.price}</h3>
                   <br/>
                   {this.props.tableIsRegistered && <IonButton onClick={this.handleClickOrder.bind(this)} className={"float-right"} color="balanced" size={'small'}>
-                  <strong className={'big-text'}>{this.props.orders.reduce((c,o)=>o.dish._id == this.props._id?c+1:c,0)}</strong>
+                  <strong className={'big-text'}>{ordersnum==0?<IonIcon icon={"plus-round"}/>:ordersnum}</strong>
                 </IonButton>}
                   </div>
                 </div>

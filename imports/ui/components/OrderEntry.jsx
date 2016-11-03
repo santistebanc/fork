@@ -35,7 +35,7 @@ export default class OrderEntry extends React.Component {
                   <div className={"float-right"}>
                   <h3>{"$"}{dish.price}</h3>
                   <br/>
-                  {this.props.tableIsRegistered && <IonButton customClasses={"float-right"} onClick={this.handleClickCancel.bind(this)} icon="ion-close" color="assertive" size="small" />}
+                  {this.props.tableIsRegistered && this.props.order.cancelable && <IonButton customClasses={"float-right"} onClick={this.handleClickCancel.bind(this)} icon="ion-close" color="assertive" size="small" />}
                   </div>
                 </div>
               </div>

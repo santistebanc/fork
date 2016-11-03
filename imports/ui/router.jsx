@@ -77,12 +77,13 @@ const enterleave = {
 
 const registerTable = function(nextState, replace){
   Session.set("table", nextState.params.num );
+  Session.set("tableIsReady", false );
   replace({pathname: '/inicio'});
 }
 
 export default (
     <Router history={browserHistory}>
-      <Route path="/" component={WithBody(MainLayoutContainer)}>
+      <Route path="/" component={WithBody(MainLayoutContainer)} onEnter={()=>{Session.set("tableIsReady", true )}}>
         <IndexRoute onEnter={redirectHome}/>
         <Route path="/inicio" component={StartPage} {...enterleave}/>
         <Route path="/menu" component={MenuPage} {...enterleave}/>

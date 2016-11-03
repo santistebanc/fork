@@ -5,7 +5,7 @@ import { IonContent, IonButton, IonCard, IonList ,IonItem, IonSpinner, IonPopove
 export default class StartPage extends React.Component {
   constructor(props){
     super(props);
-    let table = this.props.tables.find(t=>t._id == this.props.activeTable.tableId) || {};
+    let table = this.props.activeTable && this.props.tables && this.props.tables.find(t=>t._id == this.props.activeTable.tableId) || {};
     this.state = {selectedTable: false, table: table, name: props.nickName};
   }
   handleChangeTable(newtable){
@@ -21,8 +21,8 @@ export default class StartPage extends React.Component {
     this.context.ionShowPopover(popover);
   }
   componentWillReceiveProps(nextProps, nextContext){
-    let table = nextProps.tables.find(t=>t._id == nextProps.activeTable.tableId) || {};
-    if(nextProps.nickName){
+    let table = nextProps.activeTable && nextProps.tables && nextProps.tables.find(t=>t._id == nextProps.activeTable.tableId) || {};
+    if(this.state.name != nextProps.nickName && this.state.name){
       let newname = nextProps.nickName;
       this.setState({name: newname});
     }
@@ -44,7 +44,7 @@ export default class StartPage extends React.Component {
   }
   render() {
     const nameTextBox = <label className="item-input-wrapper tablenuminput textinputmargin">
-          <input type="text" placeholder="Usuario" value={this.state.name} onChange={this.handleChangeName.bind(this)}/>
+          <input type="text" placeholder="Usuario" value={this.state.name} placeholder={!this.state.name?this.props.nickName:undefined} onChange={this.handleChangeName.bind(this)}/>
       </label>
 
 return (
@@ -62,12 +62,17 @@ return (
               <strong className="title">Nombre: </strong>
               {nameTextBox}
             </IonItem>}
-            <IonItem buttonRight>
+            {!this.props.tableIsReady?
+              <IonItem customClasses={"item-input-wrap"}>
+                <IonSpinner icon="lines" />
+                <i>{this.props.tableDetails}</i>
+              </IonItem>:
+              <IonItem buttonRight customClasses={"table-select"}>
             <strong className="input-label title">Tu mesa es: </strong>
             <IonPopoverButton type="clear" onClick={this.renderPopover.bind(this)} >
-              {`Mesa ${this.state.table.num}`}<IonIcon icon={"ion-arrow-down-b"}/>
+              {this.state.table.num?`Mesa ${this.state.table.num}`:"sin asignar"}<IonIcon icon={"ion-arrow-down-b"}/>
             </IonPopoverButton>
-          </IonItem>
+          </IonItem>}
             <IonItem>
               <IonButton icon={'ion-qr-scanner'} customClasses={'float-right'} iconPosition="left" color="dark">
                   Escanear

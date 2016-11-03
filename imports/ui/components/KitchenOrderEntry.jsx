@@ -23,7 +23,7 @@ export default class KitchenOrderEntry extends React.Component {
     const tableName = table?"Mesa "+table.num:'';
     const userName = this.props.users && this.props.order?this.props.users.find(u=>u._id == this.props.order.userId).nickName:'';
     return (
-          <IonItem thumbnailLeft customClasses={"custom"}>
+          <IonItem thumbnailLeft customClasses={"custom "+(this.props.order.status == "ready"?"soft":"")}>
             <img src={`img/${dish.thumbnail}`} />
             <div className="row custom responsive-sm">
               <div className="col col-50 custom">
@@ -35,12 +35,12 @@ export default class KitchenOrderEntry extends React.Component {
                     <p className={'wrapit'}><span data-livestamp={this.props.order.dateSent}></span></p>
                   </div>
                 <div className="col col-center custom">
-                  {this.props.order.status == "received" && <IonButton onClick={this.handleClickAccept.bind(this)} customClasses={"float-right"} icon="ion-pinpoint" color="dark" size={'large'}/>}
+                  {this.props.order.status == "received" && <IonButton onClick={this.handleClickAccept.bind(this)} customClasses={"float-right"} icon="ion-play" color="dark" size={'large'}/>}
                   {this.props.order.status == "accepted" && <IonButton onClick={this.handleClickReady.bind(this)} customClasses={"float-right"} icon="ion-checkmark" color="balanced" size={'large'}/>}
-                  <IonButton customClasses={"float-right margin-right"} onClick={this.handleClickNotify.bind(this)} icon="ion-chatbubble-working" iconPosition="left" color="royal" size={'small'}>
+                  <IonButton customClasses={"float-right margin-right kitchen-option"} onClick={this.handleClickNotify.bind(this)} icon="ion-chatbubble-working" iconPosition="left" color="royal" size={'small'}>
                     notificar
                   </IonButton>
-                  <IonButton customClasses={"float-right margin-right"} onClick={this.handleClickReject.bind(this)} icon="ion-close" iconPosition="left" color="assertive" size={'small'}>
+                  <IonButton customClasses={"float-right margin-right kitchen-option"} onClick={this.handleClickReject.bind(this)} icon="ion-close" iconPosition="left" color="assertive" size={'small'}>
                     rechazar
                   </IonButton>
                 </div>

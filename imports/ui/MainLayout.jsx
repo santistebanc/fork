@@ -15,7 +15,7 @@ export default class MainLayout extends React.Component {
   render() {
     return (
     <div>
-      <IonHeaderBar customClasses="bar-calm italian-font" title="Forchetta" />
+      <IonHeaderBar customClasses="bar-calm rubik-font" title="mozo" />
       <IonFooterBar customClasses="bar-dark">
       <IonButton onClick={this.handleClickCallWaiter.bind(this)} icon={'ion-chatbox-working'} iconPosition="left" customClasses={'text-center big-text center'} color="royal" size={"large"}>
           Llamar a Mesero
