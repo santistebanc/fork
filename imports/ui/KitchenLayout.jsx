@@ -9,7 +9,7 @@ export default class KitchenLayout extends React.Component {
   render() {
     return (
     <div>
-      <IonHeaderBar customClasses="bar-calm italian-font" title="Forchetta" />
+      <IonHeaderBar customClasses="bar-calm rubik-font" title="mozo" />
       <IonFooterBar customClasses="bar-dark">
 
       </IonFooterBar>
