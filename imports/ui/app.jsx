@@ -8,6 +8,7 @@ import { Session } from 'meteor/session'
 import { moment } from 'meteor/momentjs:moment'
 
 Meteor.startup(() => {
+  
   moment.locale("es")
   if(!Meteor.userId()){
     AccountsAnonymous.login((err)=>{
