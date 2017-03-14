@@ -8,5 +8,4 @@ Meteor.startup(() => {
   }
 });
 
-
 import "../imports/api/publications.js";
